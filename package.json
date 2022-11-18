@@ -1,0 +1,31 @@
+{
+  "name": "task-service",
+  "version": "1.0.0",
+  "description": "a task service",
+  "main": "task-service.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "task",
+    "service"
+  ],
+  "author": "fwg",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adf0001/task-service.git"
+  },
+  "bugs": {
+    "url": "https://github.com/adf0001/task-service/issues"
+  },
+  "homepage": "https://github.com/adf0001/task-service#readme",
+  "peerDependencies": {
+    "express": "^4.18.2",
+    "better-sqlite3": "^7.6.2"
+  },
+  "devDependencies": {
+    "better-sqlite3": "^7.6.2",
+    "express": "^4.18.2"
+  }
+}
