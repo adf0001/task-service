@@ -1,6 +1,5 @@
-﻿
-module.exports = {
-	"better-sqlite3-api": require("./lib/better-sqlite3-api"),
+﻿module.exports = {
+  "better-sqlite3-api": require("./lib/better-sqlite3-api"),
 
-	loadService: require("./lib/load-service"),
+  loadService: require("./lib/load-service"),
 };
