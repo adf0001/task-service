@@ -22,11 +22,12 @@ module.exports = {
     var db = getDb();
 
     // prepare table
-    task_service["better-sqlite3-api"].prepareTable(db, testTableName);
+    //task_service["better-sqlite3-api"].prepareTable(db, testTableName);
 
     // get api
     var api = task_service["better-sqlite3-api"].getApi(db, {
       tableName: testTableName,
+      prepare: true,
     });
 
     var newId;
@@ -110,11 +111,12 @@ module.exports = {
     var db = getDb();
 
     // prepare table
-    task_service["better-sqlite3-api"].prepareTable(db, testTableName);
+    //task_service["better-sqlite3-api"].prepareTable(db, testTableName);
 
     // get api
     var api = task_service["better-sqlite3-api"].getApi(db, {
       tableName: testTableName,
+      prepare: true,
     });
     var service = task_service.loadService(express.Router(), api);
 

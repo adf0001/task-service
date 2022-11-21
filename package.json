@@ -1,10 +1,11 @@
 {
   "name": "task-service",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "a task service",
   "main": "task-service.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "prettier": "prettier -w *.js lib/*.js test/*.js"
   },
   "keywords": [
     "task",

@@ -15,10 +15,10 @@ var task_service = require("task-service");
 var db = new better_sqlite3(...);
 
 // prepare table
-task_service["better-sqlite3-api"].prepareTable(db, "test_tasks");
+//task_service["better-sqlite3-api"].prepareTable(db, "test_tasks");  //can be set to be called at .getApi()
 
 // get api
-var api = task_service["better-sqlite3-api"].getApi(db, { tableName: "test_tasks" });
+var api = task_service["better-sqlite3-api"].getApi(db, { tableName: "test_tasks", prepare: true });
 var service = task_service.loadService(express.Router(), api);
 
 var app = express();
