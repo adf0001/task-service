@@ -1,11 +1,12 @@
 {
   "name": "task-service",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "a task service",
   "main": "task-service.js",
   "scripts": {
     "test": "mocha",
-    "prettier": "prettier -w *.js lib/*.js test/*.js"
+    "prettier": "prettier -w *.js lib/*.js test/*.js",
+    "test:start": "node ./test/start/start.js"
   },
   "keywords": [
     "task",
@@ -21,12 +22,10 @@
     "url": "https://github.com/adf0001/task-service/issues"
   },
   "homepage": "https://github.com/adf0001/task-service#readme",
-  "peerDependencies": {
-    "express": "^4.18.2",
-    "better-sqlite3": "^7.6.2"
-  },
   "devDependencies": {
     "better-sqlite3": "^7.6.2",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "swagger-ui-express": "^4.6.0",
+    "yamljs": "^0.3.0"
   }
 }

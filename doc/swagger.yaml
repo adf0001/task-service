@@ -1,0 +1,168 @@
+openapi: 3.0.3
+info:
+  title: Task service
+  contact:
+    email: adf0001@163.com
+  license:
+    name: ISC
+  version: 1.0.1
+paths:
+  /:
+    post:
+      summary: Create one
+      requestBody:
+        $ref: '#/components/requestBodies/contentBody'
+      responses:
+        '200':
+          $ref: '#/components/responses/successResponse'
+        '400':
+          $ref: '#/components/responses/failResponse'
+    put:
+      summary: Update one
+      requestBody:
+        $ref: '#/components/requestBodies/contentBodyWithId'
+      responses:
+        '200':
+          $ref: '#/components/responses/successResponse'
+        '400':
+          $ref: '#/components/responses/failResponse'
+    get:
+      summary: Read all
+      responses:
+        '200':
+          $ref: '#/components/responses/successResponse'
+        '400':
+          $ref: '#/components/responses/failResponse'
+  /{id}/done:
+    put:
+      summary: Update one, update `done_at` to current time
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          $ref: '#/components/responses/successResponse'
+        '400':
+          $ref: '#/components/responses/failResponse'
+  /{id}:
+    delete:
+      summary: Delete one
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          $ref: '#/components/responses/successResponse'
+        '400':
+          $ref: '#/components/responses/failResponse'
+    get:
+      summary: Read one
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          $ref: '#/components/responses/successResponse'
+        '400':
+          $ref: '#/components/responses/failResponse'
+  /expire/{expire-datetime}:
+    get:
+      summary: Read all, expire
+      parameters:
+        - $ref: '#/components/parameters/expire-datetime'
+      responses:
+        '200':
+          $ref: '#/components/responses/successResponse'
+        '400':
+          $ref: '#/components/responses/failResponse'
+components:
+  schemas:
+    taskContent:
+      type: object
+      properties:
+        title:
+          type: string
+          example: title
+        expire_at:
+          type: string
+          pattern: '^\d\d\d\d\-\d\d-\d\d\s\d\d\:\d\d:\d\d$'
+          example: '2022-12-31 01:02:03'
+    taskContentWithId:
+      allOf:
+        - properties:
+            id:
+              type: number
+              example: 1
+        - $ref: '#/components/schemas/taskContent'
+    taskRow:
+      allOf:
+        - $ref: '#/components/schemas/taskContentWithId'
+        - properties:
+            create_at:
+              type: string
+              pattern: '^\d\d\d\d\-\d\d-\d\d\s\d\d\:\d\d:\d\d$'
+              example: '2022-12-31 01:02:03'
+            updated_at:
+              type: string
+              pattern: '^\d\d\d\d\-\d\d-\d\d\s\d\d\:\d\d:\d\d$'
+              example: '2022-12-31 01:02:03'
+            done_at:
+              type: string
+              nullable: true
+              pattern: '^\d\d\d\d\-\d\d-\d\d\s\d\d\:\d\d:\d\d$'
+              example: '2022-12-31 01:02:03'
+    taskRows:
+      type: array
+      items:
+        $ref: '#/components/schemas/taskRow'
+    successResponse:
+      properties:
+        msg:
+          type: string
+          example: OK
+        rows:
+          $ref: '#/components/schemas/taskRows'
+    failResponse:
+      properties:
+        error:
+          type: string
+          example: error
+  requestBodies:
+    contentBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/taskContent'
+        required: true
+    contentBodyWithId:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/taskContentWithId'
+        required: true
+  responses:
+    successResponse:
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/successResponse'
+    failResponse:
+      description: fail operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/failResponse'
+  parameters:
+    id:
+      in: path
+      name: id
+      required: true
+      schema:
+        type: number
+        example: 1
+    expire-datetime:
+      in: path
+      name: expire-datetime
+      required: true
+      schema:
+        type: string
+        pattern: '^\d\d\d\d\-\d\d-\d\d\s\d\d\:\d\d:\d\d$'
+        example: '2022-12-31 01:02:03'
