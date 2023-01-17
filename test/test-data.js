@@ -73,10 +73,15 @@ module.exports = {
       .then((rows) => {
         console.log("readExpire", rows);
         if (rows?.[rows.length - 1]?.done_at) throw "readExpire fail";
-        // delete one
-        return util.promisify(api.delete)(newId);
+        // readExpire all
+        return util.promisify(api.readExpire)(null);
       })
       .then((rows) => {
+        console.log("readExpire all", rows);
+        if (rows?.[rows.length - 1]?.done_at) throw "readExpire all fail";
+        // delete one
+        return util.promisify(api.delete)(newId);
+      }).then((rows) => {
         console.log("delete", rows);
         if (rows?.[0]?.id !== newId) throw "delete one fail";
         // read one deleted
@@ -102,7 +107,7 @@ module.exports = {
         console.log("catch", err);
         done(true);
       })
-      .finally(() => {});
+      .finally(() => { });
   },
 
   "task_service/better-sqlite3": function (done) {
@@ -241,6 +246,21 @@ module.exports = {
         .then((ret) => {
           if (!ret?.error || ret.rows) throw "readExpire-bad fail";
           console.log("readExpire-bad ok");
+
+          //readExpire all
+          return requestPromise(
+            {
+              path:
+                `/test-tasks/expire/all`,
+              method: "GET",
+            },
+            null
+          );
+        })
+        .then((ret) => {
+          if (ret?.rows?.[ret?.rows.length - 1]?.done_at)
+            throw "readExpire all fail";
+          console.log("readExpire all ok");
 
           //delete
           return requestPromise(

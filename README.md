@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS ${tableName} (
   .readAll(cb)
 
 * read all expire
-  .readExpire(expire_at, cb)
+  .readExpire(expire_at | null, cb)
 
 ```
 
@@ -116,5 +116,6 @@ CREATE TABLE IF NOT EXISTS ${tableName} (
 * read all,	GET		/
 
 * read all, expire,	GET		/expire/YYYY-MM-dd hh:mm:ss
+* read all, expire,	GET		/expire/all
 
 ```
